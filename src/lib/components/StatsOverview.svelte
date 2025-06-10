@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { Heart, TrendingUp, Users, Target } from 'lucide-svelte';
 
   export let stats = {
     totalDonations: 0,
@@ -60,27 +59,23 @@
       
       <div class="stats-overview">
         <div class="stat-card">
-          <div class="icon"><Heart /></div>
+          <div class="icon">Total Donations:</div>
           <div class="stat-value">{animatedStats.totalDonations}</div>
-          <div class="stat-label">Total Donations</div>
         </div>
       
         <div class="stat-card">
-          <div class="icon"><TrendingUp /></div>
+          <div class="icon">Total Amount:</div>
           <div class="stat-value">{formatCurrency(animatedStats.totalAmount)}</div>
-          <div class="stat-label">Total Amount</div>
         </div>
       
         <div class="stat-card">
-          <div class="icon"><Users /></div>
+          <div class="icon">Active Projects:</div>
           <div class="stat-value">{animatedStats.activeProjects}</div>
-          <div class="stat-label">Active Projects</div>
         </div>
       
         <div class="stat-card">
-          <div class="icon"><Target /></div>
+          <div class="icon">Average Donation:</div>
           <div class="stat-value">{formatCurrency(animatedStats.avgDonation)}</div>
-          <div class="stat-label">Average Donation</div>
         </div>
       </div>
       
