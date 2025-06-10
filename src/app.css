@@ -79,3 +79,8 @@ body {
 .modal-backdrop {
   backdrop-filter: blur(4px);
 }
+
+svg {
+  width: 1em;
+  height: 1em;
+}
