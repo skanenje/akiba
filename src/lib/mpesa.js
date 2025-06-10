@@ -151,3 +151,9 @@ export class MpesaService {
 
 export const mpesa = new MpesaService();
 
+export async function initiateMpesaPayment(projectId, amount) {
+  // For demo purposes, use a dummy phone number
+  const phoneNumber = '254700000000';
+  const transactionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  return await mpesa.initiatePayment(phoneNumber, amount, projectId, transactionId);
+}
