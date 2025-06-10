@@ -34,7 +34,6 @@ export async function load() {
     };
   } catch (error) {
     console.error('Error in load function:', error);
-    console.error('Error in load function:', error);
     throw new Error('An unexpected error occurred while loading data.');
   }
 }
