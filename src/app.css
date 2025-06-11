@@ -51,8 +51,8 @@ body {
 }
 
 .logo-icon {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   background: var(--gradient-primary);
   border-radius: var(--border-radius-md);
   display: flex;
@@ -411,15 +411,15 @@ body {
 }
 
 .feature-icon {
-  width: 64px;
-  height: 64px;
+  width: 48px !important;
+  height: 48px !important;
   background: var(--gradient-primary);
   border-radius: var(--border-radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: var(--space-6);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl) !important;
 }
 
 .feature-title {
@@ -432,6 +432,21 @@ body {
 .feature-description {
   color: var(--color-text-secondary);
   line-height: 1.7;
+}
+
+.feature-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.w-8 svg, .w-10 svg {
+  width: 20px;
+  height: 20px;
+}
+
+.w-5 svg, .w-3 svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Responsive Design */

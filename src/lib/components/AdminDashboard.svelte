@@ -46,13 +46,13 @@
         </a>
 
         <ul class="nav-links">
-          <li><a href="#" class="nav-link active">Dashboard</a></li>
-          <li><a href="#" class="nav-link">Projects</a></li>
-          <li><a href="#" class="nav-link">Reports</a></li>
+          <li><button class="nav-link active">Dashboard</button></li>
+          <li><button class="nav-link">Projects</button></li>
+          <li><button class="nav-link">Reports</button></li>
         </ul>
 
         <div class="nav-actions">
-          <a href="#" class="btn btn-secondary">Sign Out</a>
+          <button class="btn btn-secondary">Sign Out</button>
         </div>
       </div>
     </nav>
@@ -137,8 +137,8 @@
   }
 
   .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     background: var(--gradient-primary);
     border-radius: var(--border-radius-md);
     display: flex;
