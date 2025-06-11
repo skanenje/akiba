@@ -31,13 +31,20 @@ async function main() {
     }
   ];
 
-  for (const project of sampleProjects) {
-    await prisma.project.create({
-      data: project,
-    });
-  }
+  // Check if projects already exist
+  // const existingProjects = await prisma.project.findMany();
 
-  console.log('✅ Database initialized with sample projects');
+  // if (existingProjects.length === 0) {
+    for (const project of sampleProjects) {
+      await prisma.project.create({
+        data: project,
+      });
+    }
+  // } else {
+  //   console.log('✅ Database already contains projects, skipping initialization.');
+  // }
+
+  // console.log('✅ Database initialized with sample projects');
 }
 
 main()

@@ -18,8 +18,9 @@ export async function GET() {
 export async function POST({ request }) {
   try {
     const data = await request.json();
+    const { name, description, category, amount } = data;
     const project = await prisma.project.create({
-      data
+      data: { name, description, category, amount }
     });
     return json(project, { status: 201 });
   } catch (error) {

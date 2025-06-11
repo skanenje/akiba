@@ -48,9 +48,9 @@
   $: progressPercentage = getProgressPercentage(project.currentAmount, project.goalAmount);
 </script>
 
-<div class="campaign-card">
+<button type="button" class="campaign-card p-4 bg-gray-100 hover:bg-gray-200 transition-colors duration-200" on:click>
   <!-- Project Image -->
-  <div class="campaign-image">
+  <!-- <div class="campaign-image">
     {#if project.imageUrl}
       <img
         src={project.imageUrl}
@@ -69,7 +69,7 @@
         </div>
       </div>
     {/if}
-  </div>
+  </div> -->
 
   <!-- Project Details -->
   <div class="p-4">
@@ -121,21 +121,15 @@
     <!-- Meta Information -->
     <div class="flex items-center justify-between text-xs text-gray-500 mb-3">
       <div class="flex items-center space-x-1">
-        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 1.99 2H19c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm-5-5.5H7.5V9h7v2.5z"></path>
-        </svg>
         <span>Created {formatDate(project.createdAt)}</span>
       </div>
       <div class="flex items-center space-x-1">
-        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.59L12 10.59l-2.59-2.59L7.41 12l-2.59 2.59 2.59 2.59L10.59 14l2.59 2.59 2.59-2.59 2.59 2.59 1.41-1.41-2.59-2.59 2.59-2.59 1.41 1.41-4.59 4.59z"></path>
-        </svg>
         <span>{project.donationCount || 0} supporters</span>
       </div>
     </div>
 
     <!-- Donate Button -->
-    <a
+    <!-- <a
       href="/donate/{project.id}"
       class="w-full btn btn-primary py-2 px-4 rounded-md text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 group"
     >
@@ -145,9 +139,9 @@
         </svg>
       </div>
       <span>Donate Now</span>
-    </a>
+    </a> -->
   </div>
-</div>
+</button>
 
 <style>
   .line-clamp-2 {

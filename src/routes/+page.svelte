@@ -4,37 +4,24 @@
     import { fly, fade } from 'svelte/transition';
     import { cubicOut } from 'svelte/easing';
     import DonationForm from '$lib/components/DonationForm.svelte';
+    import ProjectCard from '$lib/components/ProjectCard.svelte';
 
     let heroVisible = false;
     let featuresVisible = false;
-    let campaignCards = [];
+    let projects = [];
+    let selectedProjectId = null;
     let featureCards = [];
     
-    onMount(() => {
+    import { browser } from '$app/environment';
+
+    onMount(async () => {
         heroVisible = true;
-        
-        // Initialize campaign cards with animation delays
-        campaignCards = [
-            {
-                id: 1,
-                title: "Community Garden Project",
-                amount: "$2,847",
-                backers: "156 backers",
-                progress: 68,
-                daysLeft: "23 days left",
-                delay: 0
-            },
-            {
-                id: 2,
-                title: "Tech Education Fund",
-                amount: "$5,230",
-                backers: "89 backers",
-                progress: 43,
-                daysLeft: "12 days left",
-                delay: 100
-            }
-        ];
-        
+
+        if (browser) {
+            const response = await fetch('/api/projects');
+            projects = await response.json();
+        }
+
         // Initialize feature cards
         featureCards = [
             {
@@ -83,6 +70,10 @@
             card.style.transform = 'translateY(0) scale(1)';
         }
     }
+
+    function selectProject(projectId) {
+        selectedProjectId = projectId;
+    }
 </script>
 
 <svelte:head>
@@ -96,29 +87,29 @@
         <div class="hero-content">
             <div class="hero-text">
                 {#if heroVisible}
-                    <h1 
+                    <h1
                         in:fly={{ y: 50, duration: 800, easing: cubicOut }}
                         class="hero-title"
                     >
                         Fund What Matters Most
                     </h1>
-                    <p 
+                    <p
                         in:fly={{ y: 50, duration: 800, delay: 200, easing: cubicOut }}
                         class="hero-description"
                     >
-                        Create meaningful campaigns, connect with supporters, and make a real impact. 
+                        Create meaningful campaigns, connect with supporters, and make a real impact.
                         The modern platform for crowdfunding success.
                     </p>
-                    
-                    <div 
+
+                    <div
                         in:fly={{ y: 50, duration: 800, delay: 400, easing: cubicOut }}
                         class="hero-actions"
                     >
                         <a href="/create" class="btn btn-primary btn-large">Start Your Campaign</a>
                         <a href="/discover" class="btn btn-secondary btn-large">Explore Projects</a>
                     </div>
-                    
-                    <div 
+
+                    <div
                         in:fly={{ y: 50, duration: 800, delay: 600, easing: cubicOut }}
                         class="hero-stats"
                     >
@@ -137,55 +128,29 @@
                     </div>
                 {/if}
             </div>
-            
-            <div class="dashboard-preview">
-                {#if heroVisible}
-                    <div 
-                        in:fly={{ x: 100, duration: 1000, delay: 300, easing: cubicOut }}
-                        class="dashboard-card floating"
-                    >
-                        <div class="dashboard-header">
-                            <div>
-                                <div class="dashboard-title">Your Campaigns (4)</div>
-                                <div class="dashboard-subtitle">Manage your fundraising projects</div>
-                            </div>
-                            <button class="start-campaign-btn">+ Start Campaign</button>
-                        </div>
-                        
-                        <div class="campaigns-grid">
-                            {#each campaignCards as campaign (campaign.id)}
-                                <div 
-                                    class="campaign-card"
-                                    in:fly={{ y: 30, duration: 600, delay: 500 + campaign.delay, easing: cubicOut }}
-                                    on:mouseenter={(e) => handleCampaignHover(e, true)}
-                                    on:mouseleave={(e) => handleCampaignHover(e, false)}
-                                    role="button"
-                                    tabindex="0"
-                                >
-                                    <div class="campaign-image"></div>
-                                    <div class="campaign-title">{campaign.title}</div>
-                                    <div class="campaign-progress">
-                                        <span class="campaign-amount">{campaign.amount}</span>
-                                        <span class="campaign-backers">{campaign.backers}</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div 
-                                            class="progress-fill" 
-                                            style="width: {campaign.progress}%"
-                                        ></div>
-                                    </div>
-                                    <div class="campaign-days">{campaign.daysLeft}</div>
-                                </div>
-                            {/each}
-                        </div>
-                    </div>
-                {/if}
-            </div>
+        </div>
+</div>
+
+
+</section>
+<section class="content-section features">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Sample Projects</h2>
+        </div>
+        <div class="projects-grid">
+            {#each projects as project (project.id)}
+                <ProjectCard project={project} on:click={() => selectProject(project.id)} />
+            {/each}
         </div>
     </div>
- <DonationForm />
 </section>
+{#if selectedProjectId}
+    <DonationForm projectId={selectedProjectId} />
+{/if}
+<section>
 
+</section>
 <!-- Features Section -->
 <section class="features">
     <div class="container">
@@ -195,11 +160,11 @@
                 Powerful tools and features designed to help your campaigns reach their full potential
             </p>
         </div>
-        
+
         <div class="features-grid">
             {#each featureCards as feature, index}
                 {#if featuresVisible}
-                    <div 
+                    <div
                         class="feature-card"
                         in:fly={{ y: 50, duration: 600, delay: index * 100, easing: cubicOut }}
                     >
@@ -212,8 +177,25 @@
         </div>
     </div>
 </section>
-
 <style>
+  .grid-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-8);
+    padding: var(--space-16) 0;
+    text-align: center;
+  }
+    .projects-section {
+        padding: var(--space-16) 0;
+        text-align: center;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-8);
+        margin-top: var(--space-8);
+    }
     /* Hero Section */
     .hero {
         padding: var(--space-20) 0 var(--space-16);
@@ -294,146 +276,6 @@
         color: var(--color-text-light);
     }
 
-    /* Dashboard Preview */
-    .dashboard-preview {
-        position: relative;
-    }
-
-    .dashboard-card {
-        background: white;
-        border-radius: var(--border-radius-2xl);
-        padding: var(--space-8);
-        box-shadow: var(--shadow-xl);
-        border: 1px solid var(--color-grey-200);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .dashboard-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--gradient-primary);
-    }
-
-    .dashboard-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: var(--space-6);
-    }
-
-    .dashboard-title {
-        font-size: var(--font-size-lg);
-        font-weight: 600;
-        color: var(--color-text-primary);
-    }
-
-    .dashboard-subtitle {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-light);
-    }
-
-    .start-campaign-btn {
-        padding: var(--space-2) var(--space-4);
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        border-radius: var(--border-radius-md);
-        font-size: var(--font-size-sm);
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition-all);
-    }
-
-    .start-campaign-btn:hover {
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-md);
-    }
-
-    /* Campaign Cards */
-    .campaigns-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-4);
-        margin-top: var(--space-6);
-    }
-
-    .campaign-card {
-        background: var(--color-grey-50);
-        border-radius: var(--border-radius-lg);
-        padding: var(--space-4);
-        transition: var(--transition-all);
-        cursor: pointer;
-        border: 1px solid var(--color-grey-200);
-    }
-
-    .campaign-image {
-        width: 100%;
-        height: 120px;
-        background: linear-gradient(45deg, var(--color-primary-light), var(--color-secondary-light));
-        border-radius: var(--border-radius-md);
-        margin-bottom: var(--space-3);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .campaign-image::after {
-        content: '🎯';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: var(--font-size-2xl);
-    }
-
-    .campaign-title {
-        font-size: var(--font-size-base);
-        font-weight: 600;
-        margin-bottom: var(--space-2);
-        color: var(--color-text-primary);
-    }
-
-    .campaign-progress {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--space-2);
-    }
-
-    .campaign-amount {
-        font-weight: 700;
-        color: var(--color-primary);
-    }
-
-    .campaign-backers {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-light);
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 4px;
-        background: var(--color-grey-200);
-        border-radius: 2px;
-        overflow: hidden;
-        margin-bottom: var(--space-2);
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: var(--gradient-primary);
-        border-radius: 2px;
-        transition: var(--transition-all);
-    }
-
-    .campaign-days {
-        font-size: var(--font-size-sm);
-        color: var(--color-text-light);
-    }
 
     /* Features Section */
     .features {
@@ -457,7 +299,6 @@
         font-size: var(--font-size-xl);
         color: var(--color-text-secondary);
         max-width: 600px;
-        margin: 0 auto;
     }
 
     .features-grid {
@@ -502,41 +343,5 @@
     .feature-description {
         color: var(--color-text-secondary);
         line-height: 1.7;
-    }
-
-    /* Floating Animation */
-    .floating {
-        animation: floating 3s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .hero-content {
-            grid-template-columns: 1fr;
-            gap: var(--space-8);
-            text-align: center;
-        }
-
-        .hero-title {
-            font-size: var(--font-size-4xl);
-        }
-
-        .campaigns-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .hero-actions {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .hero-stats {
-            justify-content: center;
-        }
     }
 </style>
