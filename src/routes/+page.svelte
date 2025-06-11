@@ -33,90 +33,10 @@
       minimumFractionDigits: 0
     }).format(amount);
   }
-
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-
-  // Header scroll effect
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 100) {
-      header.style.background = 'rgba(255, 255, 255, 0.98)';
-      header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-      header.style.background = 'rgba(255, 255, 255, 0.95)';
-      header.style.boxShadow = 'none';
-    }
-  });
-
-  // Progress bar animation
-  const observerOptions = {
-    threshold: 0.5,
-    rootMargin: '0px 0px -100px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const progressBars = entry.target.querySelectorAll('.progress-fill');
-        progressBars.forEach(bar => {
-          const width = bar.style.width;
-          bar.style.width = '0%';
-          setTimeout(() => {
-            bar.style.width = width;
-          }, 300);
-        });
-      }
-    });
-  }, observerOptions);
-
-  observer.observe(document.querySelector('.dashboard-preview'));
-
-  // Campaign card hover effects
-  document.querySelectorAll('.campaign-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-4px) scale(1.02)';
-    });
-
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0) scale(1)';
-    });
-  });
-
-  // Feature cards staggered animation
-  const featureCards = document.querySelectorAll('.feature-card');
-  const featuresObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, index * 100);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  featureCards.forEach((card, index) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    featuresObserver.observe(card);
-  });
 </script>
 
 <svelte:head>
-  <title>DonateKenya - Support Social Projects</title>
+  <title>Akiba- Support Social Projects</title>
   <meta name="description" content="Support social projects across Kenya through secure M-Pesa donations. Every contribution makes a difference." />
   <link rel="stylesheet" href="/routes/+page.css" />
 </svelte:head>
@@ -269,56 +189,29 @@
     </div>
 
     <!-- Category Filter -->
-    <div class="flex flex-wrap justify-center gap-3 mb-16">
+    <div class="category-filter">
       {#each categories as category}
         <button
-          class="px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 border-2"
-          class:bg-blue-600={selectedCategory === category.id}
+          class="category-btn"
+          class:bg-primary={selectedCategory === category.id}
           class:text-white={selectedCategory === category.id}
-          class:border-blue-600={selectedCategory === category.id}
-          class:shadow-lg={selectedCategory === category.id}
-          class:bg-white={selectedCategory !== category.id}
-          class:text-slate-700={selectedCategory !== category.id}
-          class:border-slate-200={selectedCategory !== category.id}
-          class:hover:border-blue-300={selectedCategory !== category.id}
-          class:hover:bg-slate-50={selectedCategory !== category.id}
           on:click={() => selectedCategory = category.id}
         >
           {category.name}
-          <span class="ml-2 px-2 py-1 text-xs rounded-full"
-                class:bg-white-20={selectedCategory === category.id}
-                class:bg-slate-100={selectedCategory !== category.id}
-                class:text-slate-600={selectedCategory !== category.id}>
-            {category.count}
-          </span>
+          <span class="category-count">{category.count}</span>
         </button>
       {/each}
     </div>
 
     <!-- Projects Grid -->
     {#if loading}
-      <div class="flex justify-center items-center py-24">
-        <div class="text-center">
-          <div class="animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-6"></div>
-          <p class="text-slate-600 text-lg">Loading projects<span class="loading-dots"></span></p>
-        </div>
-      </div>
+      <div class="loading-spinner"></div>
     {:else if filteredProjects.length === 0}
-      <div class="text-center py-24">
-        <div class="w-32 h-32 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto mb-8">
-          <svg class="w-16 h-16 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-          </svg>
-        </div>
-        <h3 class="text-2xl font-bold text-slate-900 mb-3">No projects found</h3>
-        <p class="text-slate-600 text-lg">
-          {selectedCategory === 'all'
-            ? 'No projects are currently available.'
-            : `No projects found in the ${categories.find(c => c.id === selectedCategory)?.name.toLowerCase()} category.`}
-        </p>
+      <div class="empty-state">
+        <p>No projects found in the {selectedCategory === 'all' ? 'selected category' : categories.find(c => c.id === selectedCategory)?.name.toLowerCase()} category.</p>
       </div>
     {:else}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="projects-grid">
         {#each filteredProjects as project (project.id)}
           <ProjectCard {project} />
         {/each}

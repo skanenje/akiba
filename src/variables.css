@@ -1,107 +1,95 @@
 :root {
-    /* Color System */
-    --color-yellow-primary: #FFD900;    /* Main yellow */
-    --color-yellow-light: #FFE500;      /* Lighter yellow for hover states */
-    --color-yellow-dark: #FFC400;       /* Darker yellow for active states */
-    
-    --color-black-primary: #000000;     /* Main black */
-    --color-black-light: #232323;       /* Lighter black for cards */
-    --color-black-dark: #1A1A1A;        /* Darker black for accents */
-    
-    /* Grey Scale */
-    --color-grey-900: #232323;
-    --color-grey-800: #3A3A3A;
-    --color-grey-700: #494949;
-    --color-grey-600: #595959;
-    --color-grey-500: #7D7D7D;
-    --color-grey-400: #A5A5A5;
-    --color-grey-300: #C7C7C7;
-    --color-grey-200: #D6D6D6;
-    --color-grey-100: #E8E8E8;
-    --color-grey-50: #F5F5F5;
-    
-    /* Base colors */
-    --color-background: var(--color-black-primary);
-    --color-text-primary: var(--color-yellow-primary);
-    --color-text-secondary: var(--color-grey-300);
-    
-    /* Brand colors */
-    --color-primary: var(--color-yellow-primary);
-    --color-primary-hover: var(--color-yellow-light);
-    --color-secondary: var(--color-black-light);
-    --color-accent: var(--color-yellow-dark);
-    
-    /* UI colors */
-    --color-surface: var(--color-black-light);
-    --color-surface-hover: var(--color-black-dark);
-    --color-border: var(--color-grey-800);
-    --color-success: #00934F;
-    --color-warning: var(--color-yellow-primary);
-    --color-error: #ED1C24;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, var(--color-yellow-primary) 0%, var(--color-yellow-dark) 100%);
-    --gradient-background: linear-gradient(135deg, var(--color-black-primary) 0%, var(--color-black-light) 100%);
-    
-    /* Shadows */
-    --shadow-card: 0 10px 30px rgba(255, 217, 0, 0.1);
-    --shadow-hover: 0 15px 40px rgba(255, 217, 0, 0.2);
-    
-    /* Transitions */
-    --transition-transform: transform 0.3s ease;
-    --transition-all: all 0.3s ease;
-    --transition-background: background 0.3s ease;
-    
-    /* Typography */
-    --font-family-primary: system-ui, -apple-system, sans-serif;
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
-    --font-size-4xl: 2.5rem;
-    
-    /* Layout */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 16px;
-    
-    /* Spacing */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
+  /* Updated Color System - Modern & Professional */
+  --color-primary: #6366f1;           /* Indigo primary */
+  --color-primary-light: #818cf8;     /* Light indigo */
+  --color-primary-dark: #4f46e5;      /* Dark indigo */
+  --color-primary-rgb: 99, 102, 241;
 
-    /* Colors */
-    --primary-color: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-rgb: 37, 99, 235;
-    
-    --background-white: #ffffff;
-    --background-light: #f8fafc;
-    
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    
-    --border-color: #e2e8f0;
-    --error-color: #dc2626;
-    --success-color: #16a34a;
-    --disabled-color: #94a3b8;
+  --color-secondary: #10b981;         /* Emerald green */
+  --color-secondary-light: #34d399;   /* Light emerald */
+  --color-secondary-dark: #059669;    /* Dark emerald */
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    
-    /* Transitions */
-    --transition-all: all 0.2s ease;
-    
-    /* Border Radius */
-    --border-radius-sm: 4px;
-    --border-radius-md: 6px;
-    --border-radius-lg: 8px;
+  --color-accent: #f59e0b;            /* Amber accent */
+  --color-accent-light: #fbbf24;      /* Light amber */
+  --color-accent-dark: #d97706;       /* Dark amber */
+
+  /* Neutral Colors */
+  --color-white: #ffffff;
+  --color-grey-50: #f9fafb;
+  --color-grey-100: #f3f4f6;
+  --color-grey-200: #e5e7eb;
+  --color-grey-300: #d1d5db;
+  --color-grey-400: #9ca3af;
+  --color-grey-500: #6b7280;
+  --color-grey-600: #4b5563;
+  --color-grey-700: #374151;
+  --color-grey-800: #1f2937;
+  --color-grey-900: #111827;
+
+  /* Background Colors */
+  --color-background: var(--color-white);
+  --color-background-light: var(--color-grey-50);
+  --color-background-dark: var(--color-grey-900);
+
+  /* Text Colors */
+  --color-text-primary: var(--color-grey-900);
+  --color-text-secondary: var(--color-grey-600);
+  --color-text-light: var(--color-grey-400);
+
+  /* Status Colors */
+  --color-success: var(--color-secondary);
+  --color-warning: var(--color-accent);
+  --color-error: #ef4444;
+  --color-info: var(--color-primary);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px rgba(var(--color-primary-rgb), 0.1);
+  --shadow-hover: 0 8px 30px rgba(var(--color-primary-rgb), 0.15);
+
+  /* Transitions */
+  --transition-all: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-transform: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-colors: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Typography */
+  --font-family-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  /* Layout */
+  --border-radius-sm: 0.375rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  --border-radius-2xl: 1.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
 }
