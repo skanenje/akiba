@@ -35,17 +35,17 @@
             
             <ul class="nav-links">
                 <li>
-                    <a 
-                        href="/dashboard" 
-                        class="nav-link" 
+                    <a
+                        href="/dashboard"
+                        class="nav-link"
                         class:active={$page.url.pathname === '/dashboard'}
                     >
                         Dashboard
                     </a>
                 </li>
                 <li>
-                    <a 
-                        href="/campaigns" 
+                    <a
+                        href="/campaigns"
                         class="nav-link"
                         class:active={$page.url.pathname === '/campaigns'}
                     >
@@ -53,8 +53,8 @@
                     </a>
                 </li>
                 <li>
-                    <a 
-                        href="/discover" 
+                    <a
+                        href="/discover"
                         class="nav-link"
                         class:active={$page.url.pathname === '/discover'}
                     >
@@ -62,8 +62,8 @@
                     </a>
                 </li>
                 <li>
-                    <a 
-                        href="/about" 
+                    <a
+                        href="/about"
                         class="nav-link"
                         class:active={$page.url.pathname === '/about'}
                     >
@@ -73,8 +73,6 @@
             </ul>
             
             <div class="nav-actions">
-                <a href="/auth/signin" class="btn btn-secondary">Sign In</a>
-                <a href="/auth/signup" class="btn btn-primary">Get Started</a>
             </div>
         </div>
     </nav>
@@ -133,9 +131,9 @@
         <div class="footer-bottom">
             <p>&copy; 2025 FundFlow. All rights reserved.</p>
             <div class="social-links">
-                <a href="#" class="social-link">Twitter</a>
-                <a href="#" class="social-link">LinkedIn</a>
-                <a href="#" class="social-link">Facebook</a>
+                <a href="https://twitter.com" class="social-link">Twitter</a>
+                <a href="https://linkedin.com" class="social-link">LinkedIn</a>
+                <a href="https://facebook.com" class="social-link">Facebook</a>
             </div>
         </div>
     </div>

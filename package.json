@@ -25,6 +25,7 @@
 		"@prisma/client": "^6.9.0",
 		"axios": "^1.4.0",
 		"better-sqlite3": "^11.10.0",
+		"mpesapay": "^4.4.1",
 		"uuid": "^9.0.0"
 	}
 }

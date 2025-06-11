@@ -16,3 +16,17 @@ model Project {
   donations   Int      @default(0)
   active      Boolean  @default(true)
 }
+
+model MpesaTransaction {
+  id              Int      @id @default(autoincrement())
+  phoneNumber     String
+  amount          Float
+  checkoutRequestId String?
+  merchantRequestId String?
+  resultCode      Int?
+  resultDesc      String?
+  transactionDate DateTime?
+  mpesaReceiptNumber String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

@@ -1,137 +1,138 @@
 <script>
-  import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
 
-  export let projectId;
+    let phoneNumber = '';
+    let amount = '';
+    let message = '';
+    let loading = false;
+    let success = false;
+    let error = '';
 
-  let amount = 0;
-  let loading = false;
-  let errorMessage = '';
+    async function donate() {
+        loading = true;
+        error = '';
+        success = false;
 
-  async function handleSubmit() {
-    loading = true;
-    errorMessage = '';
+        // Validate phone number
+        const phoneRegex = /^(2547(?:(?:[12][0-9])|(?:0[0-8])|(?:9[0-9])))[0-9]{6}$/;
+        if (!phoneRegex.test(phoneNumber)) {
+            error = 'Invalid phone number format. Use 2547XXXXXXXXX';
+            loading = false;
+            return;
+        }
 
-    try {
-      const response = await fetch('/api/mpesa/initiate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          projectId: projectId,
-          amount: amount
-        })
-      });
+        // Validate amount
+        if (!amount || isNaN(amount) || amount < 1 || amount > 70000) {
+            error = 'Amount must be between 1 and 70000 KES';
+            loading = false;
+            return;
+        }
 
-      const data = await response.json();
+        try {
+            const response = await fetch('/api/donate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phoneNumber,
+                    amount
+                })
+            });
 
-      if (response.ok) {
-        // Redirect to confirmation page
-        goto('/confirmation');
-      } else {
-        errorMessage = data.message || 'Failed to initiate M-Pesa payment.';
-      }
-    } catch (error) {
-      console.error('Error initiating M-Pesa payment:', error);
-      errorMessage = 'An unexpected error occurred.';
-    } finally {
-      loading = false;
+            const data = await response.json();
+
+            if (response.ok) {
+                success = true;
+                message = data.message;
+            } else {
+                error = data.error;
+            }
+        } catch (err) {
+            error = err.message;
+        } finally {
+            loading = false;
+        }
     }
-  }
+
+    onMount(() => {
+        // You can add any client-side logic here
+    });
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="donation-form">
-  {#if errorMessage}
-    <p class="error">{errorMessage}</p>
-  {/if}
-
-  <div class="form-group">
-    <label for="amount" class="form-label">Donation Amount (KES):</label>
-    <input type="number" id="amount" bind:value={amount} min="1" required class="form-input">
-  </div>
-
-  <button type="submit" disabled={loading} class="btn btn-primary">
-    {#if loading}
-      <span class="loading-spinner"></span> Processing...
-    {:else}
-      Donate with M-Pesa
-    {/if}
-  </button>
-</form>
-
 <style>
-  .donation-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    border-radius: var(--border-radius-xl);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-grey-200);
-  }
+    /* Add your component styles here */
+    .donation-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-  .form-group {
-    margin-bottom: 16px;
-  }
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-  .form-label {
-    display: block;
-    margin-bottom: 4px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-  }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
 
-  .form-input {
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--color-grey-300);
-    font-size: var(--font-size-base);
-    transition: var(--transition-colors);
-  }
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
 
-  .form-input:focus {
-    border-color: var(--color-primary);
-    outline: none;
-  }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
 
-  .error {
-    color: var(--color-error);
-    margin-bottom: 16px;
-  }
+    button:hover {
+        background-color: #3e8e41;
+    }
 
-  .btn-primary {
-    width: 100%;
-    padding: 12px;
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius-md);
-    transition: var(--transition-all);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .success {
+        color: green;
+        margin-top: 10px;
+    }
 
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
-
-  .loading-spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-right: 8px;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    .error {
+        color: red;
+        margin-top: 10px;
+    }
 </style>
+
+<div class="donation-form">
+    <h2>Make a Donation</h2>
+    {#if success}
+        <p class="success">{message}</p>
+    {:else if error}
+        <p class="error">{error}</p>
+    {/if}
+    <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" bind:value={phoneNumber} placeholder="2547XXXXXXXX" />
+    </div>
+    <div class="form-group">
+        <label for="amount">Amount (KES):</label>
+        <input type="number" id="amount" bind:value={amount} placeholder="Enter amount" />
+    </div>
+    <button on:click={donate} disabled={loading}>
+        {#if loading}
+            Donating...
+        {:else}
+            Donate
+        {/if}
+    </button>
+</div>

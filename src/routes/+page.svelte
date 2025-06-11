@@ -3,9 +3,8 @@
     import { onMount } from 'svelte';
     import { fly, fade } from 'svelte/transition';
     import { cubicOut } from 'svelte/easing';
-    
-    export let data;
-    
+    import DonationForm from '$lib/components/DonationForm.svelte';
+
     let heroVisible = false;
     let featuresVisible = false;
     let campaignCards = [];
@@ -184,6 +183,7 @@
             </div>
         </div>
     </div>
+ <DonationForm />
 </section>
 
 <!-- Features Section -->
